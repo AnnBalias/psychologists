@@ -1,4 +1,4 @@
-import CloseSvg from '../../../assets/icons/close.svg';
+import CloseSvg from '../../assets/icons/close.svg';
 import css from './LoginModal.module.css';
 
 const LoginModal = () => {
