@@ -1,4 +1,5 @@
 import CloseSvg from '../../assets/icons/close.svg';
+import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import css from './AppointmentModal.module.css';
 
 const AppointmentModal = () => {
@@ -14,7 +15,7 @@ const AppointmentModal = () => {
         psychologist. We guarantee confidentiality and respect for your privacy.
       </p>
       <p>PSYCHOLOGIST</p>
-      <p>APPOINTMENT FORM</p>
+      <AppointmentForm />
     </div>
   );
 };

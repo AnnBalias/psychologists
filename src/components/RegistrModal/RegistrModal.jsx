@@ -1,4 +1,5 @@
 import CloseSvg from '../../assets/icons/close.svg';
+import RegistrForm from '../RegistrForm/RegistrForm';
 import css from './RegistrModal.module.css';
 
 const RegistrModal = () => {
@@ -12,7 +13,7 @@ const RegistrModal = () => {
         Thank you for your interest in our platform! In order to register, we
         need some information. Please provide us with the following information.
       </p>
-      <p>REGISTR FORM</p>
+      <RegistrForm />
     </div>
   );
 };
