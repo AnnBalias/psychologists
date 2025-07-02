@@ -1,0 +1,28 @@
+.base {
+  position: relative;
+  background: #fbfbfb;
+  max-width: 565px;
+  border-radius: 30px;
+  padding: 64px;
+}
+
+.closeBtn {
+  position: absolute;
+  background-color: transparent;
+  padding: 0;
+  top: 20px;
+  right: 20px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.text {
+  margin-bottom: 40px;
+}
