@@ -1,0 +1,118 @@
+.hero {
+  display: flex;
+  align-items: center;
+  max-width: 1440px;
+  padding: 78px 128px 100px;
+  gap: 125px;
+}
+
+.textBox {
+  width: 595px;
+}
+
+.heroTitle {
+  font-size: 80px;
+  line-height: 1.025;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.titleSpan {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.heroText {
+  font-size: 18px;
+  line-height: 1.33333;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 40px;
+}
+
+.heroLink {
+  background-color: var(--accent);
+  border-radius: 30px;
+  width: 235px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  transition: background-color 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.heroLink:hover {
+  background-color: var(--hover);
+}
+
+.heroImg {
+  position: relative;
+  border-radius: 10px;
+  width: 464px;
+  height: 526px;
+  background-image: url('../../assets/imgs/hero-img.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.peopleBlock {
+  width: 59px;
+  height: 59px;
+  position: absolute;
+  background-image: url('../../assets/imgs/people-block.png');
+  top: 38px;
+  right: -44px;
+}
+
+.questionBlock {
+  width: 49px;
+  height: 49px;
+  position: absolute;
+  background-image: url('../../assets/imgs/question-block.png');
+  top: 185px;
+  left: -39px;
+}
+
+.infoBox {
+  background: var(--accent);
+  border-radius: 20px;
+  width: 311px;
+  height: 118px;
+  padding: 32px;
+  display: flex;
+  gap: 16px;
+  position: absolute;
+  top: 333px;
+  left: -101px;
+}
+
+.checkSvg {
+  background-color: #fbfbfb;
+  border-radius: 13px;
+  padding: 12px;
+}
+
+.infoText {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: rgba(251, 251, 251, 0.5);
+}
+
+.infoSpan {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0;
+  color: #fbfbfb;
+}
