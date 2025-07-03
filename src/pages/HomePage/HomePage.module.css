@@ -1,0 +1,7 @@
+.homeBg {
+  height: 100vh;
+  background-image: url('../../assets/imgs/home-page-bg.jpg');
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+}
