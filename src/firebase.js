@@ -1,10 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   databaseURL:
     'https://psychologists-21652-default-rtdb.europe-west1.firebasedatabase.app',
   storageBucket: 'psychologists-21652.firebasestorage.app',
@@ -14,4 +14,4 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const db = getDatabase(app);
