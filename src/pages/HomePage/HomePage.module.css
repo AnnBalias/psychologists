@@ -1,5 +1,5 @@
 .homeBg {
-  height: 100vh;
+  height: calc(100vh + 95px);
   width: 100vw;
   background-image: url('../../assets/imgs/home-page-bg.jpg');
   background-size: cover;
