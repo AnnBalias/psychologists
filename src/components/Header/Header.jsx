@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import css from './Header.module.css';
 import clsx from 'clsx';
+import UserSvg from '../../assets/icons/user.svg';
 
 const Header = () => {
   const [user, setUser] = useState(null);
@@ -35,10 +36,10 @@ const Header = () => {
         <span className={css.logoSpan}>services</span>
       </Link>
       <Navigation user={!!user} />
-      {false ? (
+      {true ? (
         <div className={css.isUser}>
           <div className={css.user}>
-            <p className={css.userLogo}>A</p>
+            <img src={UserSvg} alt="User" className={css.UserSvg} />
             <p className={css.userName}>1234567890</p>
           </div>
           <button onClick={logout} className={css.logBtn}>

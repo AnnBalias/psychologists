@@ -45,18 +45,15 @@
   gap: 14px;
 }
 
-.userLogo {
-  background: rgba(84, 190, 150, 0.2);
-  border-radius: 100px;
-  width: 44px;
-  height: 44px;
+.UserSvg {
+  background-color: var(--accent);
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1;
-  color: var(--accent);
 }
 
 .userName {
