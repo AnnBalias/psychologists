@@ -1,0 +1,95 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0 128px;
+  max-width: 1440px;
+  height: 96px;
+  border-bottom: 1px solid rgba(25, 26, 21, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  padding: 12px 0;
+  margin-right: 130px;
+}
+
+.LogoSpace {
+  margin-right: 226px;
+}
+
+.logoDot {
+  font-weight: 500;
+}
+
+.logoSpan {
+  font-weight: 600;
+  color: var(--black);
+}
+
+.isUser {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: auto;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.userLogo {
+  background: rgba(84, 190, 150, 0.2);
+  border-radius: 100px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.userName {
+  letter-spacing: -0.01em;
+  color: var(--black);
+}
+
+.logBtn {
+  background-color: transparent;
+  border: 1px solid rgba(25, 26, 21, 0.2);
+  border-radius: 30px;
+  padding: 14px 39px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--black);
+}
+
+.notUser {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.registrBtn {
+  background: var(--accent);
+  border-radius: 30px;
+  padding: 14px 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+}
