@@ -3,6 +3,9 @@
   width: 100vw;
   background-image: url('../../assets/imgs/home-page-bg.jpg');
   background-size: cover;
-  background-position: right;
+  background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

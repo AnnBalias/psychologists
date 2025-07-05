@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/HomePage/HomePage';
-import PsychologistsPage from './pages/PsychologistsPage';
+import PsychologistsPage from './pages/PsychologistsPage/PsychologistsPage';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
