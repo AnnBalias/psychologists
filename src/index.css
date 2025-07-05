@@ -18,6 +18,7 @@ body {
   line-height: 1.25;
   color: rgba(25, 26, 21, 0.5);
   margin: 0;
+  overflow-y: scroll;
 }
 
 h1,
