@@ -50,4 +50,9 @@
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: #fbfbfb;
+  transition: background-color 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.appointmentBtn:hover {
+  background-color: var(--hover);
 }
