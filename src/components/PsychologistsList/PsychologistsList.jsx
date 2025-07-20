@@ -2,8 +2,6 @@ import PsychologistsItem from './PsychologistsItem/PsychologistsItem';
 import css from './PsychologistsList.module.css';
 
 const PsychologistsList = ({ psychologists }) => {
-  console.log(psychologists);
-
   return (
     <ul className={css.list}>
       {psychologists.map((psychologist) => (
