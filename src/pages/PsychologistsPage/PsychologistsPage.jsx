@@ -3,11 +3,24 @@ import { ref, get } from 'firebase/database';
 import { db } from '../../firebase';
 import Header from '../../components/Header/Header';
 import PsychologistsList from '../../components/PsychologistsList/PsychologistsList';
+import Select from 'react-select';
+import customSelectStyles from '../../assets/styles/reactSelectStyles';
 import css from './PsychologistsPage.module.css';
 
 const onPage = 3;
+const sortOptions = [
+  { value: 'name-asc', label: 'A to Z' },
+  { value: 'name-desc', label: 'Z to A' },
+  { value: 'price-asc', label: 'Low price' },
+  { value: 'price-desc', label: 'High price' },
+  { value: 'rating-desc', label: 'Popular' },
+  { value: 'rating-asc', label: 'Not popular' },
+  { value: 'id-asc', label: 'Show all' },
+];
 
 const sortEntries = (entries, sortOption) => {
+  if (sortOption === 'id-asc') return entries;
+
   const [sortFieldRaw, sortDirection] = sortOption.split('-');
   const sortField = sortFieldRaw === 'price' ? 'price_per_hour' : sortFieldRaw;
 
@@ -28,7 +41,7 @@ const sortEntries = (entries, sortOption) => {
 const PsychologistsPage = () => {
   const [allData, setAllData] = useState([]);
   const [page, setPage] = useState(1);
-  const [sortOption, setSortOption] = useState('name-asc');
+  const [sortOption, setSortOption] = useState('id-asc');
   const [error, setError] = useState(null);
 
   const fetchAllData = async () => {
@@ -76,18 +89,18 @@ const PsychologistsPage = () => {
     <div>
       <Header />
       <div className={css.pageContent}>
-        <select
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          className={css.sortSelect}
-        >
-          <option value="name-asc">A → Z</option>
-          <option value="name-desc">Z → A</option>
-          <option value="price-asc">Price Low → High</option>
-          <option value="price-desc">Price High → Low</option>
-          <option value="rating-asc">Rating Low → High</option>
-          <option value="rating-desc">Rating High → Low</option>
-        </select>
+        <div className={css.filtersBox}>
+          <label htmlFor="sort-select" className={css.filtersLabel}>
+            Filters
+          </label>
+          <Select
+            inputId="sort-select"
+            options={sortOptions}
+            value={sortOptions.find((option) => option.value === sortOption)}
+            onChange={(selected) => setSortOption(selected.value)}
+            styles={customSelectStyles}
+          />
+        </div>
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 

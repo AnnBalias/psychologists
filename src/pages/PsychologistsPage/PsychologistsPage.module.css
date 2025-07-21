@@ -1,3 +1,36 @@
 .pageContent {
   padding: 64px 128px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filtersBox {
+  margin-right: auto;
+  margin-bottom: 32px;
+}
+
+.filtersLabel {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.28571;
+  color: #8a8a89;
+}
+
+.loadMoreBtn {
+  margin-top: 64px;
+  background: var(--accent);
+  border-radius: 30px;
+  padding: 14px 48px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  transition: background-color 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.loadMoreBtn:hover {
+  background-color: var(--hover);
 }
