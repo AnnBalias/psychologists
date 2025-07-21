@@ -4,12 +4,9 @@ import HeartSvg from '../../../assets/icons/heart.svg';
 import StarSvg from '../../../assets/icons/star.svg';
 import css from './PsychologistsItem.module.css';
 import MoreInfo from '../../MoreInfo/MoreInfo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PsychologistsItem = ({ psychologist }) => {
-  const isFavorite = psychologist.isOnline;
-  const [isMore, setIsMore] = useState(false);
-
   const {
     about,
     avatar_url,
@@ -24,6 +21,24 @@ const PsychologistsItem = ({ psychologist }) => {
     specialization,
     isOnline,
   } = psychologist;
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isMore, setIsMore] = useState(false);
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setIsFavorite(favorites.includes(id));
+  }, [id]);
+
+  const toggleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const isAlreadyFavorite = favorites.includes(id);
+    const updatedFavorites = isAlreadyFavorite
+      ? favorites.filter((favId) => favId !== id)
+      : [...favorites, id];
+
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    setIsFavorite(!isAlreadyFavorite);
+  };
 
   return (
     <>
@@ -48,7 +63,7 @@ const PsychologistsItem = ({ psychologist }) => {
               Price / 1 hour: {price_per_hour}$
             </li>
           </ul>
-          <button className={css.heartBtn}>
+          <button onClick={toggleFavorite} className={css.heartBtn}>
             {isFavorite ? (
               <img
                 src={HeartActiveSvg}
