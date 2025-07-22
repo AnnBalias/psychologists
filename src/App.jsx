@@ -3,6 +3,7 @@ import './App.css';
 import HomePage from './pages/HomePage/HomePage';
 import PsychologistsPage from './pages/PsychologistsPage/PsychologistsPage';
 import { Toaster } from 'react-hot-toast';
+import FavoritesPage from './pages/FavoritesPage/FavoritesPage';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/psychologists" element={<PsychologistsPage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
         {/* <Route path="/favorites" element={
           <PrivateRoute  redirectTo="/">
             <FavoritesPage />
