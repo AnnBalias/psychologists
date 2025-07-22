@@ -1,5 +1,6 @@
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { ref, get } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,30 @@ const Header = () => {
   const [modal, setModal] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, setUser);
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      if (authUser) {
+        try {
+          const snapshot = await get(ref(db, 'users/' + authUser.uid));
+          const userData = snapshot.val();
+
+          setUser({
+            uid: authUser.uid,
+            email: authUser.email,
+            name: userData?.username || 'User',
+          });
+        } catch (error) {
+          console.error('Failed to load user data:', error);
+          setUser({
+            uid: authUser.uid,
+            email: authUser.email,
+            name: 'User',
+          });
+        }
+      } else {
+        setUser(null);
+      }
+    });
+
     return unsubscribe;
   }, []);
 
@@ -60,13 +84,13 @@ const Header = () => {
           <span className={css.logoSpan}>services</span>
         </Link>
 
-        <Navigation user={!!user} />
+        <Navigation user={user} />
 
         {user ? (
           <div className={css.isUser}>
             <div className={css.user}>
               <img src={UserSvg} alt="User" className={css.UserSvg} />
-              <p className={css.userName}>{user.email}</p>
+              <p className={css.userName}>{user.name}</p>
             </div>
             <button onClick={logout} className={css.logBtn}>
               Log out

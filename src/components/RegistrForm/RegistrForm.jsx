@@ -40,7 +40,7 @@ const RegistrForm = ({ onClose }) => {
         email,
       });
 
-      console.log('User registered:', user);
+      toast.success('Welcome!');
       onClose();
     } catch (error) {
       console.error('Registration error:', error.message);

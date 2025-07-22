@@ -15,7 +15,7 @@ const Navigation = ({ user }) => {
       <NavLink to="/psychologists" className={buildLinkClass}>
         Psychologists
       </NavLink>
-      {false && (
+      {user && (
         <NavLink to="/favorites" className={buildLinkClass}>
           Favorites
         </NavLink>

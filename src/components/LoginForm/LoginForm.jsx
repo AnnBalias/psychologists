@@ -28,7 +28,7 @@ const LoginForm = ({ onClose }) => {
         email,
         password
       );
-      console.log('Logged in as:', userCredential.user);
+
       toast.success('Welcome back!');
       onClose();
     } catch (error) {
