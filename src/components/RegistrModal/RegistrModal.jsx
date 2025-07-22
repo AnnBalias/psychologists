@@ -2,10 +2,10 @@ import CloseSvg from '../../assets/icons/close.svg';
 import RegistrForm from '../RegistrForm/RegistrForm';
 import css from './RegistrModal.module.css';
 
-const RegistrModal = () => {
+const RegistrModal = ({ onClose }) => {
   return (
     <div className={css.base}>
-      <button className={css.closeBtn}>
+      <button onClick={onClose} className={css.closeBtn}>
         <img src={CloseSvg} alt="Close button" className={css.closeSvg} />
       </button>
       <h2 className={css.title}>Registration</h2>
@@ -13,7 +13,7 @@ const RegistrModal = () => {
         Thank you for your interest in our platform! In order to register, we
         need some information. Please provide us with the following information.
       </p>
-      <RegistrForm />
+      <RegistrForm onClose={onClose} />
     </div>
   );
 };
