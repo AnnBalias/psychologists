@@ -5,6 +5,10 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
 import { auth, db } from '../../firebase';
 import css from './RegistrForm.module.css';
+import toast from 'react-hot-toast';
+import EyeSvg from '../../assets/icons/eye.svg';
+import EyeOffSvg from '../../assets/icons/eye-off.svg';
+import { useState } from 'react';
 
 const schema = yup.object().shape({
   name: yup
@@ -20,6 +24,8 @@ const schema = yup.object().shape({
 });
 
 const RegistrForm = ({ onClose }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -43,37 +49,66 @@ const RegistrForm = ({ onClose }) => {
       toast.success('Welcome!');
       onClose();
     } catch (error) {
-      console.error('Registration error:', error.message);
+      toast.error('Something went wrong');
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
-    <div className={css.backdrop} onClick={onClose}>
-      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
-          <label>
-            Name:
-            <input type="text" {...register('name')} />
-            {errors.name && <p className={css.error}>{errors.name.message}</p>}
-          </label>
-          <label>
-            Email:
-            <input type="email" {...register('email')} />
-            {errors.email && (
-              <p className={css.error}>{errors.email.message}</p>
-            )}
-          </label>
-          <label>
-            Password:
-            <input type="password" {...register('password')} />
-            {errors.password && (
-              <p className={css.error}>{errors.password.message}</p>
-            )}
-          </label>
-          <button type="submit">Submit</button>
-        </form>
+    <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
+      <div className={css.errorBox}>
+        <input
+          type="text"
+          {...register('name')}
+          placeholder="Name"
+          className={css.input}
+        />
+        {errors.name && <p className={css.error}>{errors.name.message}</p>}
       </div>
-    </div>
+
+      <div className={css.errorBox}>
+        <input
+          type="email"
+          {...register('email')}
+          placeholder="Email"
+          className={css.input}
+        />
+        {errors.email && <p className={css.error}>{errors.email.message}</p>}
+      </div>
+
+      <div className={css.errorBox}>
+        <div className={css.passwordWrapper}>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            {...register('password')}
+            placeholder="Password"
+            className={css.pwdInput}
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className={css.eyeBtn}
+            aria-label="Toggle password visibility"
+          >
+            <img
+              src={showPassword ? EyeSvg : EyeOffSvg}
+              alt="Toggle visibility"
+              className={css.eyeSvg}
+            />
+          </button>
+        </div>
+        {errors.password && (
+          <p className={css.error}>{errors.password.message}</p>
+        )}
+      </div>
+
+      <button type="submit" className={css.submitBtn}>
+        Sign Up
+      </button>
+    </form>
   );
 };
 

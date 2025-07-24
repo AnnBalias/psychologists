@@ -1,0 +1,72 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  padding: 16px 18px;
+  width: 100%;
+  height: 52px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: var(--black);
+  margin-bottom: 18px;
+}
+
+.errorBox {
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  bottom: 21px;
+  right: 18px;
+  font-size: 12px;
+  line-height: 1;
+  color: red;
+}
+
+.passwordWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  padding: 16px 18px;
+  height: 52px;
+  margin-bottom: 40px;
+}
+
+.pwdInput {
+  width: 100%;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: var(--black);
+}
+
+.eyeBtn {
+  background-color: transparent;
+}
+
+.eyeSvg {
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.submitBtn {
+  background-color: var(--accent);
+  height: 52px;
+  border-radius: 30px;
+  padding: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  transition: background-color 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.submitBtn:hover {
+  background-color: var(--hover);
+}
