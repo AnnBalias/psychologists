@@ -6,6 +6,7 @@ import PsychologistsList from '../../components/PsychologistsList/PsychologistsL
 import Select from 'react-select';
 import customSelectStyles from '../../assets/styles/reactSelectStyles';
 import css from './PsychologistsPage.module.css';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const onPage = 3;
 const sortOptions = [
@@ -43,6 +44,7 @@ const PsychologistsPage = () => {
   const [page, setPage] = useState(1);
   const [sortOption, setSortOption] = useState('id-asc');
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
 
   const fetchAllData = async () => {
     try {
@@ -68,6 +70,11 @@ const PsychologistsPage = () => {
   };
 
   useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+
     const load = async () => {
       const data = await fetchAllData();
       setAllData(data);
@@ -75,6 +82,7 @@ const PsychologistsPage = () => {
     };
 
     load();
+    return () => unsubscribe();
   }, [sortOption]);
 
   const paginatedData = useMemo(() => {
@@ -104,7 +112,7 @@ const PsychologistsPage = () => {
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <PsychologistsList psychologists={paginatedData} />
+        <PsychologistsList psychologists={paginatedData} user={user} />
 
         {paginatedData.length < allData.length && (
           <button onClick={handleLoadMore} className={css.loadMoreBtn}>

@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 import { getAuth } from 'firebase/auth';
 import AttentionSvg from '../../../assets/icons/attention.svg';
 
-const PsychologistsItem = ({ psychologist }) => {
+const PsychologistsItem = ({ psychologist, user }) => {
   const {
     about,
     avatar_url,
@@ -27,16 +27,18 @@ const PsychologistsItem = ({ psychologist }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isMore, setIsMore] = useState(false);
 
-  const auth = getAuth();
-  const currentUser = auth.currentUser;
-
   useEffect(() => {
+    if (!user) {
+      setIsFavorite(false);
+      return;
+    }
+
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     setIsFavorite(favorites.includes(id));
-  }, [id]);
+  }, [user, id]);
 
   const toggleFavorite = () => {
-    if (!auth.currentUser) {
+    if (!user) {
       toast('Sign in to use this option', {
         icon: <img src={AttentionSvg} width={18} alt="Attention!" />,
       });
