@@ -120,7 +120,7 @@ const PsychologistsItem = ({ psychologist, user }) => {
         </ul>
         <p className={css.about}>{about}</p>
         {isMore ? (
-          <MoreInfo reviews={reviews} />
+          <MoreInfo psychologist={psychologist} />
         ) : (
           <button onClick={() => setIsMore(true)} className={css.moreInfoBtn}>
             Read more

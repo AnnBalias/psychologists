@@ -1,7 +1,22 @@
+import { useState } from 'react';
+import AppointmentModal from '../AppointmentModal/AppointmentModal';
+import ModalWrapper from '../ModalWrapper/ModalWrapper';
 import StarSvg from '../../assets/icons/star.svg';
 import css from './MoreInfo.module.css';
 
-const MoreInfo = ({ reviews }) => {
+const MoreInfo = ({ psychologist }) => {
+  const { avatar_url, name, reviews } = psychologist;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <ul className={css.reviewList}>
@@ -21,7 +36,22 @@ const MoreInfo = ({ reviews }) => {
           </li>
         ))}
       </ul>
-      <button className={css.appointmentBtn}>Make an appointment</button>
+
+      <button className={css.appointmentBtn} onClick={handleOpenModal}>
+        Make an appointment
+      </button>
+
+      {isModalOpen && (
+        <ModalWrapper
+          component={
+            <AppointmentModal
+              psychologist={{ name, avatar_url }}
+              onClose={handleCloseModal}
+            />
+          }
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 };
