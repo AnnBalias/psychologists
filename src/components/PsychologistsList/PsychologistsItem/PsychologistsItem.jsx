@@ -5,6 +5,9 @@ import StarSvg from '../../../assets/icons/star.svg';
 import css from './PsychologistsItem.module.css';
 import MoreInfo from '../../MoreInfo/MoreInfo';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { getAuth } from 'firebase/auth';
+import AttentionSvg from '../../../assets/icons/attention.svg';
 
 const PsychologistsItem = ({ psychologist }) => {
   const {
@@ -24,12 +27,22 @@ const PsychologistsItem = ({ psychologist }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isMore, setIsMore] = useState(false);
 
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     setIsFavorite(favorites.includes(id));
   }, [id]);
 
   const toggleFavorite = () => {
+    if (!auth.currentUser) {
+      toast('Sign in to use this option', {
+        icon: <img src={AttentionSvg} width={18} alt="Attention!" />,
+      });
+      return;
+    }
+
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const isAlreadyFavorite = favorites.includes(id);
     const updatedFavorites = isAlreadyFavorite
