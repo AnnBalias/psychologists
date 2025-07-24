@@ -1,17 +1,33 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import css from './ModalWrapper.module.css';
 
 const ModalWrapper = ({ component, onClose }) => {
+  const [isClosing, setIsClosing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
   useEffect(() => {
+    const currentScroll = window.scrollY;
+    setScrollY(currentScroll);
     document.body.style.position = 'fixed';
-    document.body.style.top = '0';
+    document.body.style.top = `-${currentScroll}px`;
     document.body.style.left = '0';
     document.body.style.right = '0';
-    document.body.style.overflowY = 'scroll';
+
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 10);
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        onClose();
+        handleClose();
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -21,15 +37,22 @@ const ModalWrapper = ({ component, onClose }) => {
       document.body.style.top = '';
       document.body.style.left = '';
       document.body.style.right = '';
-      document.body.style.overflowY = '';
-      window.scrollTo(0, scrollY);
+      window.scrollTo(0, currentScroll);
       document.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(timeout);
     };
-  }, [onClose]);
+  }, []);
 
   return (
-    <div className={css.modalWrapper} onClick={onClose}>
-      <div onClick={(e) => e.stopPropagation()}>{component}</div>
+    <div
+      className={`${css.modalWrapper} ${
+        isClosing ? css.closing : isVisible ? css.open : ''
+      }`}
+      onClick={handleClose}
+    >
+      <div onClick={(e) => e.stopPropagation()} className={css.modalContent}>
+        {component}
+      </div>
     </div>
   );
 };
