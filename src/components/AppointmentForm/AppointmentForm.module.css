@@ -30,6 +30,10 @@
   margin-bottom: 16px;
 }
 
+.input:focus {
+  border: 1px solid rgba(25, 26, 21, 0.1);
+}
+
 .dayTimeBox {
   display: flex;
   gap: 8px;

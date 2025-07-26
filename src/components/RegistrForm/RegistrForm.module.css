@@ -15,6 +15,10 @@
   margin-bottom: 18px;
 }
 
+.input:focus {
+  border: 1px solid rgba(25, 26, 21, 0.1);
+}
+
 .errorBox {
   position: relative;
 }
