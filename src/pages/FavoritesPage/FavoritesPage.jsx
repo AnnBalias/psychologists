@@ -6,6 +6,8 @@ import PsychologistsList from '../../components/PsychologistsList/PsychologistsL
 import Select from 'react-select';
 import customSelectStyles from '../../assets/styles/reactSelectStyles';
 import css from '../PsychologistsPage/PsychologistsPage.module.css';
+import toast from 'react-hot-toast/headless';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const onPage = 3;
 const sortOptions = [
@@ -43,6 +45,7 @@ const FavoritesPage = () => {
   const [page, setPage] = useState(1);
   const [sortOption, setSortOption] = useState('id-asc');
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
 
   const fetchAllData = async () => {
     try {
@@ -63,13 +66,18 @@ const FavoritesPage = () => {
 
       return [];
     } catch (err) {
-      console.error('Fetch error:', err);
+      toast.error('Failed to load data');
       setError('Failed to load data');
       return [];
     }
   };
 
   useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+
     const load = async () => {
       const data = await fetchAllData();
       setAllData(data);
@@ -77,6 +85,7 @@ const FavoritesPage = () => {
     };
 
     load();
+    return () => unsubscribe();
   }, [sortOption]);
 
   const paginatedData = useMemo(() => {
@@ -106,7 +115,7 @@ const FavoritesPage = () => {
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <PsychologistsList psychologists={paginatedData} />
+        <PsychologistsList psychologists={paginatedData} user={user} />
 
         {paginatedData.length < allData.length && (
           <button onClick={handleLoadMore} className={css.loadMoreBtn}>
