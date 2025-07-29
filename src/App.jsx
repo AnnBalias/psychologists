@@ -4,6 +4,7 @@ import PrivateRoute from './PrivateRoute';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 import Loader from './components/Loader/Loader';
+import ScrollUpButton from './components/ScrollUpButton/ScrollUpButton';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const PsychologistsPage = lazy(() =>
@@ -34,6 +35,7 @@ function App() {
             duration: 4000,
           }}
         />
+        <ScrollUpButton />
       </Suspense>
     </>
   );
