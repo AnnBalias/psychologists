@@ -8,6 +8,7 @@ import customSelectStyles from '../../assets/styles/reactSelectStyles';
 import css from '../PsychologistsPage/PsychologistsPage.module.css';
 import toast from 'react-hot-toast/headless';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Loader from '../../components/Loader/Loader';
 
 const onPage = 3;
 const sortOptions = [
@@ -46,11 +47,11 @@ const FavoritesPage = () => {
   const [sortOption, setSortOption] = useState('id-asc');
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAllData = async () => {
     try {
       setError(null);
-
       const snapshot = await get(ref(db, 'psychologist_1'));
       const data = snapshot.val();
 
@@ -79,9 +80,11 @@ const FavoritesPage = () => {
     });
 
     const load = async () => {
+      setIsLoading(true);
       const data = await fetchAllData();
       setAllData(data);
       setPage(1);
+      setIsLoading(false);
     };
 
     load();
@@ -115,12 +118,17 @@ const FavoritesPage = () => {
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <PsychologistsList psychologists={paginatedData} user={user} />
-
-        {paginatedData.length < allData.length && (
-          <button onClick={handleLoadMore} className={css.loadMoreBtn}>
-            Load more
-          </button>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <PsychologistsList psychologists={paginatedData} user={user} />
+            {paginatedData.length < allData.length && (
+              <button onClick={handleLoadMore} className={css.loadMoreBtn}>
+                Load more
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

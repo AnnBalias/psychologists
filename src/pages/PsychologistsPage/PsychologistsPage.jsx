@@ -7,6 +7,8 @@ import Select from 'react-select';
 import customSelectStyles from '../../assets/styles/reactSelectStyles';
 import css from './PsychologistsPage.module.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Loader from '../../components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 const onPage = 3;
 const sortOptions = [
@@ -45,6 +47,7 @@ const PsychologistsPage = () => {
   const [sortOption, setSortOption] = useState('id-asc');
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAllData = async () => {
     try {
@@ -63,7 +66,7 @@ const PsychologistsPage = () => {
 
       return [];
     } catch (err) {
-      console.error('Fetch error:', err);
+      toast.error('Failed to load data');
       setError('Failed to load data');
       return [];
     }
@@ -76,9 +79,11 @@ const PsychologistsPage = () => {
     });
 
     const load = async () => {
+      setIsLoading(true);
       const data = await fetchAllData();
       setAllData(data);
       setPage(1);
+      setIsLoading(false);
     };
 
     load();
@@ -110,14 +115,22 @@ const PsychologistsPage = () => {
           />
         </div>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {isLoading ? (
+          <div className={css.loaderWrapper}>
+            <Loader />
+          </div>
+        ) : (
+          <>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
 
-        <PsychologistsList psychologists={paginatedData} user={user} />
+            <PsychologistsList psychologists={paginatedData} user={user} />
 
-        {paginatedData.length < allData.length && (
-          <button onClick={handleLoadMore} className={css.loadMoreBtn}>
-            Load more
-          </button>
+            {paginatedData.length < allData.length && (
+              <button onClick={handleLoadMore} className={css.loadMoreBtn}>
+                Load more
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

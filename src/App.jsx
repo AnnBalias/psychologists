@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import { Toaster } from 'react-hot-toast';
 import './App.css';
+import Loader from './components/Loader/Loader';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const PsychologistsPage = lazy(() =>
@@ -13,7 +14,7 @@ const FavoritesPage = lazy(() => import('./pages/FavoritesPage/FavoritesPage'));
 function App() {
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/psychologists" element={<PsychologistsPage />} />
