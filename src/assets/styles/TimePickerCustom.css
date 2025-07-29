@@ -1,0 +1,52 @@
+.react-datepicker__time-container {
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 20px 69px 0 rgba(0, 0, 0, 0.07);
+  width: 150px;
+  height: 179px;
+  overflow: hidden;
+}
+
+.react-datepicker__header:not(.react-datepicker__header--has-time-select) {
+  background-color: transparent;
+  border: none;
+  padding: 16px;
+}
+
+.react-datepicker-time__header {
+  background-color: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #191a15;
+  background-color: transparent;
+  text-align: center;
+  border: none;
+}
+
+.react-datepicker__time {
+  background: transparent;
+  height: calc(100% - 56px);
+  width: 100%;
+}
+
+.react-datepicker__time-list-item {
+  width: 100%;
+  height: auto;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  text-align: center;
+  color: rgba(25, 26, 21, 0.3);
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.react-datepicker__time-list-item:hover,
+.react-datepicker__time-list-item--selected {
+  color: #191a15;
+  background-color: transparent;
+}

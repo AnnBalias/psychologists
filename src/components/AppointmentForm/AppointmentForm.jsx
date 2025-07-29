@@ -6,6 +6,10 @@ import css from './AppointmentForm.module.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format } from 'date-fns';
+import ClockSvg from '../../assets/icons/clock.svg';
+import CalendarSvg from '../../assets/icons/сalendar.svg';
+import '../../assets/styles/DatePickerCustom.css';
+import '../../assets/styles/TimePickerCustom.css';
 
 const schema = yup.object().shape({
   name: yup
@@ -83,43 +87,49 @@ const AppointmentForm = () => {
 
       <div className={css.dayTimeBox}>
         <div className={css.errorBox}>
-          <Controller
-            control={control}
-            name="date"
-            render={({ field }) => (
-              <DatePicker
-                placeholderText={format(new Date(), 'yyyy-MM-dd')}
-                selected={field.value}
-                onChange={(date) => field.onChange(date)}
-                dateFormat="yyyy-MM-dd"
-                className={css.input}
-                minDate={new Date()}
-                onKeyDown={(e) => e.preventDefault()}
-              />
-            )}
-          />
+          <div className={css.inputWrapper}>
+            <Controller
+              control={control}
+              name="date"
+              render={({ field }) => (
+                <DatePicker
+                  placeholderText={format(new Date(), 'yyyy-MM-dd')}
+                  selected={field.value}
+                  onChange={(date) => field.onChange(date)}
+                  dateFormat="yyyy-MM-dd"
+                  className={css.dateInput}
+                  minDate={new Date()}
+                  onKeyDown={(e) => e.preventDefault()}
+                />
+              )}
+            />
+            <img src={CalendarSvg} alt="Date" className={css.dateSvg} />
+          </div>
           {errors.date && <p className={css.error}>{errors.date.message}</p>}
         </div>
 
         <div className={css.errorBox}>
-          <Controller
-            control={control}
-            name="time"
-            render={({ field }) => (
-              <DatePicker
-                selected={field.value}
-                onChange={(val) => field.onChange(val)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                timeCaption="Time"
-                dateFormat="HH:mm"
-                placeholderText="00:00"
-                className={css.input}
-                onKeyDown={(e) => e.preventDefault()}
-              />
-            )}
-          />
+          <div className={css.inputWrapper}>
+            <Controller
+              control={control}
+              name="time"
+              render={({ field }) => (
+                <DatePicker
+                  selected={field.value}
+                  onChange={(val) => field.onChange(val)}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeCaption="Meeting time"
+                  timeIntervals={30}
+                  dateFormat="HH:mm"
+                  placeholderText="00:00"
+                  className={css.dateInput}
+                  onKeyDown={(e) => e.preventDefault()}
+                />
+              )}
+            />
+            <img src={ClockSvg} alt="Date" className={css.dateSvg} />
+          </div>
           {errors.time && <p className={css.error}>{errors.time.message}</p>}
         </div>
       </div>
