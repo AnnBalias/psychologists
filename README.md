@@ -30,7 +30,6 @@ The project design is available on [Figma](https://www.figma.com/file/I5vjNb0NsJ
 - **favorites system** for logged-in users
   - add psychologists to favorites
   - view and sort favorites on a dedicated page
-- fully **responsive design**
   
 ## 👩🏻‍💼 Author
 Anna Balias
@@ -50,3 +49,4 @@ Anna Balias
 ![Vite](https://img.shields.io/badge/Vite-00AA00?style=for-the-badge&logo=vite&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-00AA00?style=for-the-badge&logo=vercel&logoColor=white)
 ![Figma](https://img.shields.io/badge/Figma-00AA00?style=for-the-badge&logo=figma&logoColor=white)
+
