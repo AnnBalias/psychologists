@@ -22,12 +22,13 @@ const sortOptions = [
 ];
 
 const sortEntries = (entries, sortOption) => {
-  if (sortOption === 'id-asc') return entries;
+  const copied = [...entries];
+  if (sortOption === 'id-asc') return copied;
 
   const [sortFieldRaw, sortDirection] = sortOption.split('-');
   const sortField = sortFieldRaw === 'price' ? 'price_per_hour' : sortFieldRaw;
 
-  return entries.sort((a, b) => {
+  return copied.sort((a, b) => {
     if (sortField === 'name') {
       return sortDirection === 'asc'
         ? a.name.localeCompare(b.name)
@@ -48,6 +49,9 @@ const FavoritesPage = () => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(localStorage.getItem('favorites')) || [];
+  });
 
   const fetchAllData = async () => {
     try {
@@ -65,7 +69,7 @@ const FavoritesPage = () => {
         return sortEntries(entries, sortOption);
       }
 
-      return [];
+      return [...sortEntries(entries, sortOption)];
     } catch (err) {
       toast.error('Failed to load data');
       setError('Failed to load data');
@@ -81,19 +85,29 @@ const FavoritesPage = () => {
 
     const load = async () => {
       setIsLoading(true);
-      const data = await fetchAllData();
-      setAllData(data);
+      const snapshot = await get(ref(db, 'psychologist_1'));
+      const data = snapshot.val();
+
+      if (data) {
+        const entries = Object.entries(data)
+          .map(([id, value]) => ({ id, ...value }))
+          .filter((item) => favorites.includes(item.id));
+
+        const sorted = sortEntries(entries, sortOption);
+        setAllData([...sorted]);
+      } else {
+        setAllData([]);
+      }
+
       setPage(1);
       setIsLoading(false);
     };
 
     load();
     return () => unsubscribe();
-  }, [sortOption]);
+  }, [sortOption, favorites]);
 
-  const paginatedData = useMemo(() => {
-    return allData.slice(0, page * onPage);
-  }, [allData, page]);
+  const paginatedData = allData.slice(0, page * onPage);
 
   const handleLoadMore = () => {
     setPage((prev) => prev + 1);
@@ -122,7 +136,12 @@ const FavoritesPage = () => {
           <Loader />
         ) : (
           <>
-            <PsychologistsList psychologists={paginatedData} user={user} />
+            <PsychologistsList
+              psychologists={paginatedData}
+              user={user}
+              favorites={favorites}
+              setFavorites={setFavorites}
+            />
             {paginatedData.length < allData.length && (
               <button onClick={handleLoadMore} className={css.loadMoreBtn}>
                 Load more

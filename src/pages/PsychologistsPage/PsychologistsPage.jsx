@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { ref, get } from 'firebase/database';
 import { db } from '../../firebase';
 import Header from '../../components/Header/Header';
@@ -22,12 +22,13 @@ const sortOptions = [
 ];
 
 const sortEntries = (entries, sortOption) => {
-  if (sortOption === 'id-asc') return entries;
+  const copied = [...entries];
+  if (sortOption === 'id-asc') return copied;
 
   const [sortFieldRaw, sortDirection] = sortOption.split('-');
   const sortField = sortFieldRaw === 'price' ? 'price_per_hour' : sortFieldRaw;
 
-  return entries.sort((a, b) => {
+  return copied.sort((a, b) => {
     if (sortField === 'name') {
       return sortDirection === 'asc'
         ? a.name.localeCompare(b.name)
@@ -48,6 +49,9 @@ const PsychologistsPage = () => {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(localStorage.getItem('favorites')) || [];
+  });
 
   const fetchAllData = async () => {
     try {
@@ -81,14 +85,14 @@ const PsychologistsPage = () => {
     const load = async () => {
       setIsLoading(true);
       const data = await fetchAllData();
-      setAllData(data);
+      setAllData([...data]);
       setPage(1);
       setIsLoading(false);
     };
 
     load();
     return () => unsubscribe();
-  }, [sortOption]);
+  }, [sortOption, favorites]);
 
   const paginatedData = useMemo(() => {
     return allData.slice(0, page * onPage);
@@ -97,6 +101,16 @@ const PsychologistsPage = () => {
   const handleLoadMore = () => {
     setPage((prev) => prev + 1);
   };
+
+  const toggleFavorite = useCallback((id) => {
+    setFavorites((prev) => {
+      const updated = prev.includes(id)
+        ? prev.filter((favId) => favId !== id)
+        : [...prev, id];
+      localStorage.setItem('favorites', JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
 
   return (
     <div>
@@ -123,7 +137,12 @@ const PsychologistsPage = () => {
           <>
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <PsychologistsList psychologists={paginatedData} user={user} />
+            <PsychologistsList
+              psychologists={paginatedData}
+              user={user}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
 
             {paginatedData.length < allData.length && (
               <button onClick={handleLoadMore} className={css.loadMoreBtn}>

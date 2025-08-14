@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 import { getAuth } from 'firebase/auth';
 import AttentionSvg from '../../../assets/icons/attention.svg';
 
-const PsychologistsItem = ({ psychologist, user }) => {
+const PsychologistsItem = ({ psychologist, user, favorites, setFavorites }) => {
   const {
     about,
     avatar_url,
@@ -39,20 +39,17 @@ const PsychologistsItem = ({ psychologist, user }) => {
 
   const toggleFavorite = () => {
     if (!user) {
-      toast('Sign in to use this option', {
-        icon: <img src={AttentionSvg} width={18} alt="Attention!" />,
-      });
+      toast.error('Log in to access your favorites');
       return;
     }
 
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const isAlreadyFavorite = favorites.includes(id);
-    const updatedFavorites = isAlreadyFavorite
-      ? favorites.filter((favId) => favId !== id)
-      : [...favorites, id];
+    const updated = favorites.includes(psychologist.id)
+      ? favorites.filter((id) => id !== psychologist.id)
+      : [...favorites, psychologist.id];
 
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    setIsFavorite(!isAlreadyFavorite);
+    localStorage.setItem('favorites', JSON.stringify(updated));
+    setFavorites(updated);
+    setIsFavorite(updated.includes(psychologist.id));
   };
 
   return (
@@ -78,7 +75,10 @@ const PsychologistsItem = ({ psychologist, user }) => {
               Price / 1 hour: {price_per_hour}$
             </li>
           </ul>
-          <button onClick={toggleFavorite} className={css.heartBtn}>
+          <button
+            onClick={() => toggleFavorite(psychologist.id)}
+            className={css.heartBtn}
+          >
             {isFavorite ? (
               <img
                 src={HeartActiveSvg}
